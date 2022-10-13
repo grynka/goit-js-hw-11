@@ -15,6 +15,16 @@ searchButton.addEventListener("click", function(event) {
 })
 
 
+const lightbox = new SimpleLightbox(".gallery a", {
+  captionDelay: 250,
+  captionSelector: "img",
+  captionType: "attr",
+  captionsData: "alt",
+  captionPosition: "bottom",
+  captionClass: "",
+  
+});
+
 //const { height: cardHeight } = document
 //  .querySelector(".gallery")
 //  .firstElementChild.getBoundingClientRect();
@@ -29,12 +39,13 @@ searchButton.addEventListener("click", function(event) {
   async function getImages(text) {
     console.log(text)
     try {
-      const response = await axios.get(`https://pixabay.com/api/?key=30502346-d120979d6222d217ab4c63b0e&q=${text}&image_type=photo&orientation=horizontal&safesearch=true`);
+      const response = await axios.get(`https://pixabay.com/api/?key=30502346-d120979d6222d217ab4c63b0e&q=${text}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40`);
       console.log(response.data.hits);
+      gallery.innerHTML = "";
       for (hit of response.data.hits) {
      gallery.insertAdjacentHTML('beforeend',
-       `<div class="photo-card">
-  <img src="${hit.previewURL}" alt="" loading="lazy" />
+       `<a href="${hit.largeImageURL}"><div class="photo-card">
+  <img src="${hit.webformatURL}" alt="" loading="lazy" />
   <div class="info">
     <p class="info-item">
       <b>Like</b>${hit.likes}
@@ -49,7 +60,7 @@ searchButton.addEventListener("click", function(event) {
       <b>Downloads</b>${hit.downloads}
     </p>
   </div>
-</div>`
+</div></a>`
      )
       }
     
