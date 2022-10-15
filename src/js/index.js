@@ -2,8 +2,8 @@ import SimpleLightbox from "simplelightbox";
 // Додатковий імпорт стилів
 import "simplelightbox/dist/simple-lightbox.min.css";
 import Notiflix from "notiflix";
-import { getImages } from "./js/API";
-import markup from './js/templates/markup.hbs'
+import { getImages } from "./API";
+import markup from './templates/markup.hbs'
 
 const searchField = document.querySelector("input[name='searchQuery']")
 const searchButton = document.querySelector("button[type='submit']")
