@@ -16,7 +16,13 @@ searchButton.addEventListener("click", function(event) {
     event.preventDefault()
     getImages(searchField.value).then(data =>   {
       Notiflix.Notify.success(`Hooray! We found ${response.data.totalHits} images.`)
-      gallerys.insertAdjacentHTML('beforeend', markup(response.data.hits))
+      gallerys.insertAdjacentHTML('beforeend', markup(response.data.hits));
+      const { height: cardHeight } = gallerys.firstElementChild.getBoundingClientRect();
+window.scrollBy({
+  top: cardHeight * 2,
+  behavior: "smooth",
+});
+
       })
 })
 
@@ -31,14 +37,6 @@ const lightbox = new SimpleLightbox(".gallery a", {
   
 });
 
-//const { height: cardHeight } = document
-//  .querySelector(".gallery")
-//  .firstElementChild.getBoundingClientRect();
-//
-//window.scrollBy({
-//  top: cardHeight * 2,
-//  behavior: "smooth",
-//});
 
 
 
