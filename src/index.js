@@ -12,6 +12,7 @@ const searchButton = document.querySelector("button[type='submit']")
 const gallerys = document.querySelector(".gallery")
 
 searchButton.addEventListener("click", function(event) {
+  gallerys.innerHTML = "";
     event.preventDefault()
     getImages(searchField.value).then(data =>   {
       Notiflix.Notify.success(`Hooray! We found ${response.data.totalHits} images.`)
