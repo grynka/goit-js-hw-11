@@ -5,37 +5,49 @@ import Notiflix from "notiflix";
 import { getImages } from "./js/API";
 import markup from './js/templates/markup.hbs'
 
-
-
 const searchField = document.querySelector("input[name='searchQuery']")
 const searchButton = document.querySelector("button[type='submit']")
 const gallerys = document.querySelector(".gallery")
+const loadMore = document.querySelector(".load-more")
+const lightbox = new SimpleLightbox(".gallery a");
+let page;
 
 searchButton.addEventListener("click", function(event) {
+  page = 1;
   gallerys.innerHTML = "";
     event.preventDefault()
     getImages(searchField.value).then(data =>   {
       Notiflix.Notify.success(`Hooray! We found ${response.data.totalHits} images.`)
       gallerys.insertAdjacentHTML('beforeend', markup(response.data.hits));
-      const { height: cardHeight } = gallerys.firstElementChild.getBoundingClientRect();
-window.scrollBy({
-  top: cardHeight * 2,
-  behavior: "smooth",
-});
-
+      lightbox.refresh();
+      const { height: cardHeight } = gallerys
+      .firstElementChild.getBoundingClientRect();
+      window.scrollBy({
+          top: cardHeight * 2,
+            behavior: "smooth",
+          });
       })
-})
+      loadMore.removeAttribute('hidden');
+
+    })
+
+loadMore.addEventListener("click", onLoad)
+
+function onLoad() {
+  page += 1
+  getImages(searchField.value, page).then(data =>   {
+    Notiflix.Notify.success(`Hooray! We found ${response.data.totalHits} images.`)
+    gallerys.insertAdjacentHTML('beforeend', markup(response.data.hits));
+    })
+    if(response.data.totalHits/40 <= page) {
+      Notiflix.Notify.success("We're sorry, but you've reached the end of search results.")
+      loadMore.setAttribute('hidden', true)
+    }
+}
 
 
-const lightbox = new SimpleLightbox(".gallery a", {
-  captionDelay: 250,
-  captionSelector: "img",
-  captionType: "attr",
-  captionsData: "alt",
-  captionPosition: "bottom",
-  captionClass: "",
-  
-});
+
+
 
 
 
