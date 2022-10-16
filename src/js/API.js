@@ -11,4 +11,3 @@ export async function getImages(text, page) {
     console.error(error);
   }
 }
-
