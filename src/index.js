@@ -23,6 +23,7 @@ searchButton.addEventListener("click", function(event) {
       Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
       gallerys.insertAdjacentHTML('beforeend', markup(data.hits));
       lightbox.refresh();
+      loadMore.removeAttribute('hidden');
       const { height: cardHeight } = gallerys
       .firstElementChild.getBoundingClientRect();
       window.scrollBy({
@@ -30,7 +31,6 @@ searchButton.addEventListener("click", function(event) {
             behavior: "smooth",
           });
       })
-      loadMore.removeAttribute('hidden');
 
     })
 
