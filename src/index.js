@@ -38,10 +38,11 @@ function onLoad() {
   getImages(searchField.value, page).then(data =>   {
     Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`)
     gallerys.insertAdjacentHTML('beforeend', markup(data.hits));
+    lightbox.refresh();
     if(data.totalHits/40 <= page) {
       Notiflix.Notify.success("We're sorry, but you've reached the end of search results.")
       loadMore.setAttribute('hidden', true)
     }
 })
-lightbox.refresh();
+
 }
