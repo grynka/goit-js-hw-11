@@ -18,6 +18,7 @@ searchButton.addEventListener("click", function(event) {
     event.preventDefault()
     getImages(searchField.value, page).then(data =>   {
         if (data.total === 0) {
+           loadMore.setAttribute('hidden', true)
            return Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
         }
       Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
