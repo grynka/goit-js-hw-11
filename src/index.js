@@ -17,7 +17,10 @@ searchButton.addEventListener("click", function(event) {
   gallerys.innerHTML = "";
     event.preventDefault()
     getImages(searchField.value, page).then(data =>   {
-      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`)
+        if (data.total === 0) {
+           return Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
+        }
+      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
       gallerys.insertAdjacentHTML('beforeend', markup(data.hits));
       lightbox.refresh();
       const { height: cardHeight } = gallerys
